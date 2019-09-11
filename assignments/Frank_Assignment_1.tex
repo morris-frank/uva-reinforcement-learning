@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{morris}
+
+\setcounter{section}{-1}
+\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+
+\title{Reinforcement Learning - Exercises Lectures 1-5}
+\author{%
+  Maurice Frank\\
+  11650656\\
+  \href{mailto:maurice.frank@posteo.de}{maurice.frank@posteo.de} \\
+  Code: \href{https://github.com/morris-frank/uvadlc_practicals_2019/tree/master/assignment_2}{github}
+}
+
+\begin{document}
+\maketitle
+
+\section{}
+\subsection{Linear algebra and multivariable derivatives}
+\begin{enumerate}
+  \item
+  \begin{align}
+    AB
+    &= \bM{a_{11} & 0\\ 0 & a_{22}} \· \bM{b_{11} & b_{12}\\ b_{21} & b_{22}}\\
+    &= \bM{a_{11}b_{11} & a_{11}b_{12}\\ a_{22}b_{21} & a_{22}b_{22}}\\
+    AB^T
+    &= \bM{a_{11} & 0\\ 0 & a_{22}} \· \bM{b_{11} & b_{21}\\ b_{12} & b_{22}}\\
+    &= \bM{a_{11}b_{11} & a_{11}b_{21}\\ a_{22}b_{12} & a_{22}b_{22}}\\
+    d^T B d
+    &= \bM{d_1 & d_2} \bM{b_{11} & b_{12}\\ b_{21} & b_{22}} \bM{d_1\\d_2}\\
+    &= d_1^2 b_{11} + d_1d_2 b_{12} + d_1d_2 b_{21} + d_2^2 b_{22}
+  \end{align}
+
+  \item
+  \begin{align}
+    A^{-1}
+    &= \bM{a_{11}^{-1} & 0 \\ 0 & a_{22}^{-1}}\\
+    B^{-1}
+    &= \÷{1}{b_{11}b_{22}-b_{21}b_{12}} \bM{b_{22} & -b_{21} \\ -b_{12} & b_{11}}
+  \end{align}
+
+  \item
+  \begin{align}
+    \pf{c}{x}
+    &= \bM{-2x \\ \÷{1}{yx}}\\
+    \pf{c}{e}
+    &= \bM{-2x & 1 \\ \÷{1}{yx} & -\ln{(x)}y^{-2}}
+  \end{align}
+
+  \item
+  \begin{align}
+    f(\B{x})
+    &= \Σ_i^N ix_i\\
+    \pf{f(\B{x})}{\B{x}}
+    &= \Σ_i^N i
+  \end{align}
+\end{enumerate}
+
+\subsection{Probability theory}
+\begin{enumerate}
+  \item
+  \begin{align}
+    \E{[X + \α Y]}
+    &= \E{[X]} + \α \E{[Y]}\\
+    &= \μ + \α \ν
+  \end{align}
+
+  \item
+  \begin{align}
+    \var{[X + \α Y]}
+    &= \var{[X]} + \α^2 \var{[Y]} + 2\α \cov{[X, Y]}
+  \end{align}
+
+
+\end{enumerate}
+
+\end{document}
