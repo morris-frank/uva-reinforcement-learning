@@ -1,8 +1,11 @@
 \documentclass{article}
 \usepackage{morris}
+\usepackage{enumerate}
 
 \setcounter{section}{-1}
-\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+\renewcommand{\thesection}{Lecture \arabic{section}:}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}.}
 
 \title{Reinforcement Learning - Exercises Lectures 1-5}
 \author{%
@@ -17,61 +20,217 @@
 
 \section{}
 \subsection{Linear algebra and multivariable derivatives}
-\begin{enumerate}
-  \item
-  \begin{align}
-    AB
-    &= \bM{a_{11} & 0\\ 0 & a_{22}} \· \bM{b_{11} & b_{12}\\ b_{21} & b_{22}}\\
-    &= \bM{a_{11}b_{11} & a_{11}b_{12}\\ a_{22}b_{21} & a_{22}b_{22}}\\
-    AB^T
-    &= \bM{a_{11} & 0\\ 0 & a_{22}} \· \bM{b_{11} & b_{21}\\ b_{12} & b_{22}}\\
-    &= \bM{a_{11}b_{11} & a_{11}b_{21}\\ a_{22}b_{12} & a_{22}b_{22}}\\
-    d^T B d
-    &= \bM{d_1 & d_2} \bM{b_{11} & b_{12}\\ b_{21} & b_{22}} \bM{d_1\\d_2}\\
-    &= d_1^2 b_{11} + d_1d_2 b_{12} + d_1d_2 b_{21} + d_2^2 b_{22}
-  \end{align}
+\subsubsection{}
+\begin{align}
+  AB
+  &= \bM{a_{11} & 0\\ 0 & a_{22}} \· \bM{b_{11} & b_{12}\\ b_{21} & b_{22}}\\
+  &= \bM{a_{11}b_{11} & a_{11}b_{12}\\ a_{22}b_{21} & a_{22}b_{22}}\\
+  AB^T
+  &= \bM{a_{11} & 0\\ 0 & a_{22}} \· \bM{b_{11} & b_{21}\\ b_{12} & b_{22}}\\
+  &= \bM{a_{11}b_{11} & a_{11}b_{21}\\ a_{22}b_{12} & a_{22}b_{22}}\\
+  d^T B d
+  &= \bM{d_1 & d_2} \bM{b_{11} & b_{12}\\ b_{21} & b_{22}} \bM{d_1\\d_2}\\
+  &= d_1^2 b_{11} + d_1d_2 b_{12} + d_1d_2 b_{21} + d_2^2 b_{22}
+\end{align}
 
-  \item
-  \begin{align}
-    A^{-1}
-    &= \bM{a_{11}^{-1} & 0 \\ 0 & a_{22}^{-1}}\\
-    B^{-1}
-    &= \÷{1}{b_{11}b_{22}-b_{21}b_{12}} \bM{b_{22} & -b_{21} \\ -b_{12} & b_{11}}
-  \end{align}
+\subsubsection{}
+\begin{align}
+  A^{-1}
+  &= \bM{a_{11}^{-1} & 0 \\ 0 & a_{22}^{-1}}\\
+  B^{-1}
+  &= \÷{1}{b_{11}b_{22}-b_{21}b_{12}} \bM{b_{22} & -b_{21} \\ -b_{12} & b_{11}}
+\end{align}
 
-  \item
-  \begin{align}
-    \pf{c}{x}
-    &= \bM{-2x \\ \÷{1}{yx}}\\
-    \pf{c}{e}
-    &= \bM{-2x & 1 \\ \÷{1}{yx} & -\ln{(x)}y^{-2}}
-  \end{align}
+\subsubsection{}
+\begin{align}
+  \pf{c}{x}
+  &= \bM{-2x \\ \÷{1}{yx}}\\
+  \pf{c}{e}
+  &= \bM{-2x & 1 \\ \÷{1}{yx} & -\ln{(x)}y^{-2}}
+\end{align}
 
-  \item
-  \begin{align}
-    f(\B{x})
-    &= \Σ_i^N ix_i\\
-    \pf{f(\B{x})}{\B{x}}
-    &= \Σ_i^N i
-  \end{align}
-\end{enumerate}
+\subsubsection{}
+\begin{align}
+  f(\B{x})
+  &= \Σ_i^N ix_i\\
+  \pf{f(\B{x})}{\B{x}}
+  &= \bM{1,\…,N}
+\end{align}
 
 \subsection{Probability theory}
-\begin{enumerate}
+\subsubsection{}
+\begin{align}
+  \E{[X + \α Y]}
+  &= \E{[X]} + \α \E{[Y]}\\
+  &= \μ + \α \ν
+\end{align}
+
+\subsubsection{}
+\begin{align}
+  \var{[X + \α Y]}
+  &= \var{[X]} + \α^2 \var{[Y]} + 2\α \cov{[X, Y]}
+\end{align}
+
+\subsubsection{}
+At last we have \(\σ^2\) which is just the variance of the noise in the measurements.
+This is model independent (we can not train it away).
+The bias term tells us how good our estimator estimates the sample data points.
+The estimator variance tells us how jumpy our estimator is.
+If the model has little parameters ('smooth') it will have high bias but low variance (if regularizes over the evident points but doesn't estimate the data that good anymore).
+If the model is a complex one with high capacity it will have low bias but high variance.
+
+\subsubsection{}
+This is called the bias-variance trade-off as in machine learning we are mostly interested in building a model which has high bias and high variance.
+The trade-off shows us that these two are opposite in their objective and that optimizing both is not easy.
+
+\subsection{OLS, linear projection and gradient descent}
+We have training set \(\B{X}\∈\ℝ^{n\× m}\) with targets \(\B{y}\∈\ℝ^n\).
+We have a linear model \(f_{\B{\β}}(\B{X}) = \B{X}\·\B{\β}\).
+\subsubsection{}
+\[ \B{\β}\∈\ℝ^{m} \]
+
+\subsubsection{}
+\begin{align*}
+  \hat{\B{\β}}
+  &= \argmin_{\B{\β}} {(\B{y} - f_{\B{\β}}(\B{X}))}^2\\
+  \pf{}{\hat{\B{\β}}}{(\B{y} - f_{\hat{\B{\β}}}(\B{X}))}^2
+  &= \pf{}{\hat{\B{\β}}} {(\B{y} - \B{X}\hat{\B{\β}})}^2\\
+  &= \pf{}{\hat{\B{\β}}} {\B{y}}^2 -2\B{y}\B{X}\hat{\B{\β}} +{(\B{X}\hat{\B{\β}})}^2\\
+  &= 2\B{X}^T\B{X}\hat{\B{\β}} - 2\B{y}\B{X}\\
+  &\hastoequal 0\\
+  &\⇔\\
+  \B{X}^T\B{X}\hat{\B{\β}}
+  &= \B{X}^T\B{y}\\
+  &\⇔\\
+  \hat{\B{\β}}
+  &= {(\B{X}^T\B{X})}^{-1}\B{X}^T\B{y}
+\end{align*}
+
+\subsubsection{}
+\begin{align*}
+  \B{\ε}_{\B{\β}}
+  &= \B{y} - \B{X}\hat{\B{\β}}
+\end{align*}
+
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
+
+\section{Introduction}
+\subsection{Introduction}
+\subsubsection{}
+The curse of dimensionality are mutliple sad observation called one will make when working with high-dimensional data.
+In general the problems arise from the fact that the number of value combinations rises exponentially, with the dimension in the exponential.
+E.g. in hyper-parameter optimization using grid-search the number of needed models to be tested rises exponentially with the number of hyper-parameters.
+Another example we often see in machine learning with high-dimensional data.
+With a limited number of trainings samples the distribution of those might be highly sparse in its space akin like a set of dirac functions.
+Trying to approximate that might be difficult.
+
+\subsubsection{}
+\begin{enumerate}[(a)]
   \item
-  \begin{align}
-    \E{[X + \α Y]}
-    &= \E{[X]} + \α \E{[Y]}\\
-    &= \μ + \α \ν
-  \end{align}
+  \begin{align*}
+    N_{\text{states}}
+    &= N_{\text{predator states}} \· N_{\text{prey states}}\\
+    &= 5^2\·5^2\\
+    &= 625
+  \end{align*}
 
   \item
-  \begin{align}
-    \var{[X + \α Y]}
-    &= \var{[X]} + \α^2 \var{[Y]} + 2\α \cov{[X, Y]}
-  \end{align}
+  As it is a toroid we just have to remember the differences of the two entities.
+  So the state is just the offset in toroidial coordinates.
 
+  \item
+  \begin{align*}
+    N^{'}_{\text{states}}
+    &= 5\·5\\
+    &= 25
+  \end{align*}
 
+  \item
+  The advantage of this approach is that we have fewer states and now multiple states that have to learn the same response to it.
+  Thus we can assume faster training of our predator.
+
+  \item
+  For Tic-Tac-Toe we could reduce the state space by using the point symmetry of the game board.
+  Of all starting states that are symmetric through the center only keep one.
 \end{enumerate}
+
+\subsubsection{}
+\begin{enumerate}[(a)]
+  \item
+  The greedy agent will perform better.
+  Tic-tac-toe is a solved games as such a trained agent can know the perfect move to any situation and no exploration is necessary.
+\end{enumerate}
+
+\subsubsection{}
+\begin{enumerate}[(a)]
+  \item
+  We decrease the exploration probability \(\ε\) each step with a discount factor \(\η\).
+  We can write the exploration probability at step \(\ε_t\) with:
+  \begin{align*}
+    \ε_t
+    &= \ε\·\η^t
+  \end{align*}
+
+  \item
+  No, that method would not work if the opponent changes strategy.
+  It continously decreases exploration over time independent of the game dynamics.
+  We can adapt our strategy by introducing the time step of the last strategy change of the opponent \(t_{\text{change}}\).
+  Then we restart from the beginning if the strategy changes:
+  \begin{align*}
+    \ε_t
+    &= \ε\·\η^{t - t_{\text{change}}}
+  \end{align*}
+\end{enumerate}
+
+\subsection{Exploration}
+\subsubsection{}
+\begin{align*}
+  (1-\ε) + \÷{\ε}{n}
+\end{align*}
+
+\subsubsection{}
+\(A_3\) and \(A_4\).
+The first one could be greedy as all states have the same average.
+Same for the second as 2 and 3 have the greedy average.
+The third action could be greedy as state 2 has the top average then.
+The next two are suboptimal thus have to be exploration.
+
+\subsubsection{}
+\(R_0 = -1\) and \(R_1 = +1\). By randome we choose \(A_0\) in the first step.
+See the development of the Q-values:
+
+\begin{center}
+  \begin{tabular}{ccccc}
+    step & \(Q_0^{\text{pessi}}\) & \(Q_1^{\text{pessi}}\) & \(Q_0^{\text{opti}}\) & \(Q_1^{\text{opti}}\) \\\toprule
+    0 & -5 & -5 & 5 & 5\\
+    1 & \B{-1} & -5 & \B{-1} & 5\\
+    2 & \B{-1} & -5 & -1 & \B{1}\\
+    3 & \B{-1} & -5 & -1 & \B{1}\\
+  \end{tabular}
+\end{center}
+
+\subsubsection{}
+The optimistic initalization (\(== 2\)) leads to the higher return than with the pessimistic initalization (\(== -3\)).
+If broken the tie the other way:
+\begin{center}
+  \begin{tabular}{ccccc}
+    step & \(Q_0^{\text{pessi}}\) & \(Q_1^{\text{pessi}}\) & \(Q_0^{\text{opti}}\) & \(Q_1^{\text{opti}}\) \\\toprule
+    0 & -5 & -5 & 5 & 5\\
+    1 & -5 & \B{1} & \B{-1} & \B{}\\
+    2 & -5 & -5 & -1 & \B{1}\\
+    3 & -5 & -5 & -1 & \B{1}\\
+  \end{tabular}
+\end{center}
+
+
+\subsubsection{}
+The optimistic initalization leads to the better estimate of the Q-values.
+
+\subsubsection{}
+The optimistic initalization works better for exploration because it has all values high in the beginning.
+As such
 
 \end{document}
