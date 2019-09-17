@@ -199,8 +199,8 @@ The third action could be greedy as state 2 has the top average then.
 The next two are suboptimal thus have to be exploration.
 
 \subsubsection{}
-\(R_0 = -1\) and \(R_1 = +1\). By randome we choose \(A_0\) in the first step.
-See the development of the Q-values:
+\(R_0 = -1\) and \(R_1 = +1\). By random we choose \(A_0\) in the first step.
+See the development of the Q-values (bold is the chooses action with greedy policy):
 
 \begin{center}
   \begin{tabular}{ccccc}
@@ -213,24 +213,46 @@ See the development of the Q-values:
 \end{center}
 
 \subsubsection{}
-The optimistic initalization (\(== 2\)) leads to the higher return than with the pessimistic initalization (\(== -3\)).
+The optimistic initalization leads to the higher return (\(== 1\)) than with the pessimistic initalization (\(== -3\)).
 If broken the tie the other way:
 \begin{center}
   \begin{tabular}{ccccc}
     step & \(Q_0^{\text{pessi}}\) & \(Q_1^{\text{pessi}}\) & \(Q_0^{\text{opti}}\) & \(Q_1^{\text{opti}}\) \\\toprule
     0 & -5 & -5 & 5 & 5\\
-    1 & -5 & \B{1} & \B{-1} & \B{}\\
-    2 & -5 & -5 & -1 & \B{1}\\
-    3 & -5 & -5 & -1 & \B{1}\\
+    1 & -5 & \B{1} & 5 & \B{1}\\
+    2 & -5 & \B{1} & \B{-1} & 1\\
+    3 & -5 & \B{1} & -1 & \B{1}\\
   \end{tabular}
 \end{center}
+In this case the pessimistic initalization lead to the higher return (\(==3\)) than the optimistic initalization (\(==1\)).
 
 
 \subsubsection{}
 The optimistic initalization leads to the better estimate of the Q-values.
 
 \subsubsection{}
-The optimistic initalization works better for exploration because it has all values high in the beginning.
-As such
+The optimistic initalization works better for exploration as its basic assumption is that any action could be the best until proven otherwise.
+As such it will lead to everything being tried using the high initalization values.
+
+\section{MDPs and dynamic programming}
+\subsection{Markov Decision Processes}
+\subsubsection{}
+\begin{enumerate}[(a)]
+  \item
+\end{enumerate}
+
+\subsubsection{}
+\begin{enumerate}[(a)]
+  \item
+\end{enumerate}
+
+\subsection{Homework: Dynamic Programming}
+\subsubsection{}
+
+\subsubsection{}
+
+\subsubsection{}
+
+\subsubsection{}
 
 \end{document}
