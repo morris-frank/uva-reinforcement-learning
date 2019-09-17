@@ -300,11 +300,52 @@ As such it will lead to everything being tried using the high initalization valu
 
 \subsection{Homework: Dynamic Programming}
 \subsubsection{}
+First the  stochastic case:
+\begin{align*}
+  v^{\π}(s)
+  &= \Σ_a \π(a|s) \Σ_{s',r} p(s',r|s,a)\left[r+ \γ\·v_{\π}(s')\right]\\
+  &= \Σ_a \π(a|s) \· q^\π(s,a)
+\end{align*}
+
+and the deterministic policy:
+\begin{align*}
+  v^{\π}(s)
+  &= \argmax_a \π(a|s) \Σ_{s',r} p(s',r|s,a)\left[r+ \γ\·v_{\π}(s')\right]\\
+  &= \argmax_a \π(a|s) \· q^\π(s,a)
+\end{align*}
+
+\subsubsection{}
+
 
 \subsubsection{}
 
 \subsubsection{}
 
+\section{Monte Carlo methods}
+\subsection{Homework: Monte carlo}
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
+
+\section{Temporal difference methods}
+\subsection{Temporal difference learning (Application)}
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
+
+\subsection{Contraction mapping}
+\subsubsection{}
+\subsubsection{}
+
+\subsection{Temporal difference learning (theory)}
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
+
+\subsection{Homework: Maximization bias}
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
 \subsubsection{}
 
 \end{document}
