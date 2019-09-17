@@ -238,12 +238,64 @@ As such it will lead to everything being tried using the high initalization valu
 \subsection{Markov Decision Processes}
 \subsubsection{}
 \begin{enumerate}[(a)]
-  \item
+  \item Description of the games defined in Section 1.2 in Sutton/Barton:
+  \begin{center}
+    \hspace*{-3cm}\begin{tabular}{p{3cm}p{4cm}p{4cm}p{4cm}}
+      Game & State Space & Action Space & Reward Signal \\\toprule
+      Master chess & All possible chess game sequences & Set of single legal moves in chess & \\\midrule
+      Adaptive petroleum refinery controller & Current state of the refinery (e.g. yield, quality, fillness) + state of the marginal costs & Yield, cost and quality levers & RoI \\\midrule
+      Newborn gazelle & basically all possible worlds around the gazelle & any physical action possible as a newborn gazelle & health and joy \\\midrule
+      Trash robot & physical state, power level, history of movement trajectories & possible movements & How much trash taken + not loosing all charge \\\bottomrule
+    \end{tabular}
+  \end{center}
+
+  \item Another example of an Reinforcement learning application:
+  \hfill
+  \begin{center}
+    \hspace*{-3cm}\begin{tabular}{p{3cm}p{4cm}p{4cm}p{4cm}}
+      Game & State space & Action space & Reward signal \\\toprule
+      Composing musician & all possible partly composed songs & adding new notes / instruments & beauty of the song \\\bottomrule
+    \end{tabular}
+  \end{center}
+
+  \item An example for a game that is hard to represent with an MDP is Age of Empires with Fog of War set to on. As the fog of war hides the gambe boards current state to the actor we can not actually build a state space that describes the games state.
+
+  \item One could think of a maze with parts that only can be overcome with enough stamina. In this case stamina would be a state variable.
+
+  \item With these three actions we can reach any state the robot might get into as such they are sufficient actions for the game. The disadvantage though is that they are quite low level actions for the robot. It might be more usefull for the RL algorithm to focus on the high-level control decision. Actually driving the robot from A to B can be solved otherwise.
+
+  \item One could separate the two problems, driving and decision making. Solve both with their own RL algorithm.
 \end{enumerate}
 
 \subsubsection{}
 \begin{enumerate}[(a)]
   \item
+  \begin{align*}
+    G &= \Σ_{i=0}^N \γ^i \· R_{i}
+  \end{align*}
+
+  \item
+  \begin{align*}
+    \Σ_{k=0}^\infty \γ^k &= 1 + \γ\·\Σ_{k=0}^\infty \γ^k\\
+    &\⇔\\
+    \Σ_{k=0}^\infty \γ^k - \γ\·\Σ_{k=0}^\infty \γ^k &= 1\\
+    &\⇔\\
+    \Σ_{k=0}^\infty \γ^k \· (1-\γ) &= 1\\
+    &\⇔\\
+    \Σ_{k=0}^\infty \γ^k &= \÷{1}{1-\γ}\\
+  \end{align*}
+
+  \item
+  Because we made the task episodic we assumed the run through the maze to be always the same length.
+  Thus our robot does not focus on learning to solve the maze in shorter time lengths.
+
+  \item
+  A discount factor of \(\γ<1\) would help with this because it would discount the return of solving the maze more the longer the robot needed to exit it.
+  Thus the robot will learn to solve it faster.
+
+  \item
+  We could add a negative reward for each done step (moving is hard!).
+  To avoid the negative reward the robot would learn to do fewer steps to solve the maze.
 \end{enumerate}
 
 \subsection{Homework: Dynamic Programming}
