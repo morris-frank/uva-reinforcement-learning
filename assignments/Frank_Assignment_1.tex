@@ -462,6 +462,25 @@ This is just using the max Q values from the Q-learning estimation.
 
 \subsection{Contraction mapping}
 \subsubsection{}
+\begin{enumerate}[(a)]
+  \item
+  \begin{align*}
+    T(x)
+    &:= 1+\÷{1}{3}x\\
+    &\⇒\\
+    x &= 1+\÷{1}{3}x\\
+    &\⇔\\
+    x_{\text{fix}}
+    &= \÷{1}{1-\÷{1}{3}}\\
+    &= \÷{3}{2}\\
+  \end{align*}
+
+  \item
+  \begin{align*}
+    (Tf)(s) &:= \÷{-1}{2}f(s) + g(s)\\
+  \end{align*}
+\end{enumerate}
+
 \subsubsection{}
 
 \subsection{Temporal difference learning (theory)}
