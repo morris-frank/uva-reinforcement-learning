@@ -8,7 +8,7 @@
 \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\arabic{subsubsection}.}
 
-\title{Reinforcement Learning - Exercises Lectures 1-5}
+\title{Reinforcement Learning -- Exercises Lectures 1-5}
 \author{%
   Maurice Frank\\
   11650656\\
@@ -324,7 +324,7 @@ and the deterministic policy:
       \ForAll{\(s\∈ S\)}
         \ForAll{\(a\∈ A(s)\)}
           \State \(q \gets Q(s, a)\)
-          \State \(Q(s, a) \gets \Σ_{s',r} p(s',r|s,\π(s))[r+\γ\·V(s')]\)
+          \State \(Q(s, a) \gets \Σ_{s',r} p(s',r|s,a)[r+\γ\·Q(s',\π(s'))]\)
           \State \(\Δ \gets \max{(\Δ, |q-Q(s,a)|)}\)
         \EndFor
       \EndFor
@@ -339,7 +339,7 @@ and the deterministic policy:
     \State \(\text{policy-stable} \gets true\)
     \ForAll{\(s \∈ S\)}
       \State \(\text{old-action} \gets \π(s)\)
-      \State \(\π(s) \gets \argmax_a \Σ_{s',r} p(s',r|s,a)[r+\γ\·V(s')]\)
+      \State \(\π(s) \gets \argmax_a Q(s,a)\)
       \If{\(\text{old-action} \neq \π(s)\)}
         \State \(\text{policy-stable} \gets false\)
       \EndIf
@@ -348,6 +348,10 @@ and the deterministic policy:
 \end{algorithm}
 
 \subsubsection{}
+\begin{align*}
+    q_{k+1}(s,a)
+    &= \Σ_{s',r} p(s',r|s,a) \left[r + \γ\·\max_{a'}q_k(s',a')\right]
+\end{align*}
 
 \section{Monte Carlo methods}
 \subsection{Homework: Monte carlo}
@@ -375,7 +379,7 @@ This can considerably slow down convergence of the value estimation.
 
 \subsubsection{}
 The problem with \I{weighted importance sampling} is that its value estimation is biased.
-\B{????????}
+\B{HEEEELLLP????}
 
 \section{Temporal difference methods}
 \subsection{Temporal difference learning (Application)}
@@ -398,6 +402,7 @@ The problem with \I{weighted importance sampling} is that its value estimation i
   \end{center}
 
   \item 3-step TD
+  \B{TODO}
   \begin{center}
     \begin{tabular}{ccc}
       t & A & B\\\toprule
@@ -412,11 +417,11 @@ The problem with \I{weighted importance sampling} is that its value estimation i
     \begin{tabular}{lllll}
       t & A,1 & A,2 & B,1 & B,2\\\toprule
       0 & 0 & 0 & 0 & 0 \\
-      1 & -5 & 0 & 0 & 0 \\
-      2 & -5 & 0 & 0.4 & 0 \\
-      3 & -5 & -0.9 & 0.4 & 0 \\
-      4 & -4.8 & -0.9 & 0.4 & 0 \\
-      5 & -4.8 & -0.9 & 0.4 & 0.1\\\bottomrule
+      1 & -0.3 & 0 & 0 & 0 \\
+      2 & -0.3 & 0 & 0.4 & 0 \\
+      3 & -0.3 & -0.43 & 0.4 & 0 \\
+      4 & -0.63 & -0.43 & 0.4 & 0 \\
+      5 & -0.63 & -0.43 & 0.4 & 0.1 \\\bottomrule
     \end{tabular}
   \end{center}
 
@@ -438,7 +443,22 @@ The problem with \I{weighted importance sampling} is that its value estimation i
 \end{enumerate}
 
 \subsubsection{}
+A better policy would be to take action 1 for B and action 2 for A.
+This is just using the max Q values from the Q-learning estimation.
+
 \subsubsection{}
+\begin{enumerate}
+  \item The value estimate of \(\π_{\text{random}}\) would reflect the actual correct values while the \(\π_{\text{student}}\) policy would show a skewed image.
+  For B it always picks the better off terminal action while valueing action 1 with zero.
+  For A it would get stuck in a loop of worsening scores.
+
+  \item The problem with a fixed random policy is that it does not learn to avoid obvious wrong decision (like 2 for A).
+  The problem with the alternative policy is that it was pre-emptively set from a wrong approximation of the correct values.
+  So it is stuck not discovering correct alternative strategies.
+
+  \item An \(\ε\)-greedy would be beneficial in this case as it would allow our policy to make definitly good decisions (like 2 for B) but if set still allows to see alternative options.
+  In this case the student policy would be able to see the value of taking action 1 for A.
+\end{enumerate}
 
 \subsection{Contraction mapping}
 \subsubsection{}
