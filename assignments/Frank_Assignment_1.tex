@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{morris}
 \usepackage{enumerate}
+\usepackage{diagbox}
 
 \setcounter{section}{-1}
 \renewcommand{\thesection}{Lecture \arabic{section}:}
@@ -379,6 +380,63 @@ The problem with \I{weighted importance sampling} is that its value estimation i
 \section{Temporal difference methods}
 \subsection{Temporal difference learning (Application)}
 \subsubsection{}
+\begin{enumerate}[(a)]
+  \item TD(0)
+  \begin{align*}
+    V(s_{t-1}) &\gets V(s_{t-1}) + \α\·(r_t + \γ V(s_t) - V(s_{t-1}))
+  \end{align*}
+  \begin{center}
+    \begin{tabular}{lll}
+      t & A & B\\\toprule
+      0 & 0 & 0\\
+      1 & -0.3 & 0\\
+      2 & -0.3 & 0.37\\
+      3 & -0.7 & 0.37\\
+      4 & -0.893 & 0.37\\
+      5 & -0.893 & 0.3437\\\bottomrule
+    \end{tabular}
+  \end{center}
+
+  \item 3-step TD
+  \begin{center}
+    \begin{tabular}{ccc}
+      t & A & B\\\toprule
+    \end{tabular}
+  \end{center}
+
+  \item SARSA
+  \begin{align*}
+    Q(s_t,a_t) &\gets Q(s_t,a_t) + \α[r_t + Q(s_{t+1},a_{t+1}) - Q(s_t,a_t)]
+  \end{align*}
+  \begin{center}
+    \begin{tabular}{lllll}
+      t & A,1 & A,2 & B,1 & B,2\\\toprule
+      0 & 0 & 0 & 0 & 0 \\
+      1 & -5 & 0 & 0 & 0 \\
+      2 & -5 & 0 & 0.4 & 0 \\
+      3 & -5 & -0.9 & 0.4 & 0 \\
+      4 & -4.8 & -0.9 & 0.4 & 0 \\
+      5 & -4.8 & -0.9 & 0.4 & 0.1\\\bottomrule
+    \end{tabular}
+  \end{center}
+
+  \item Q-Learning
+  \begin{align*}
+    Q(s_t,a_t) &\gets Q(s_t,a_t) + \α(r_{t+1} + \γ\max_a Q(s_{t+1}, a) - Q(s_t,a_t))
+  \end{align*}
+  \begin{center}
+    \begin{tabular}{lllll}
+      t & A,1 & A,2 & B,1 & B,2\\\toprule
+      0 & 0 & 0 & 0 & 0\\
+      1 & -0.3 & 0 & 0 & 0\\
+      2 & -0.3 & 0 & 0.4 & 0\\
+      3 & -0.3 & -0.4 & 0.4 & 0\\
+      4 & -0.53 & -0.4 & 0.4 & 0\\
+      5 & -0.53 & -0.4 & 0.4 & 0.1\\\bottomrule
+    \end{tabular}
+  \end{center}
+\end{enumerate}
+
 \subsubsection{}
 \subsubsection{}
 
@@ -393,8 +451,48 @@ The problem with \I{weighted importance sampling} is that its value estimation i
 
 \subsection{Homework: Maximization bias}
 \subsubsection{}
+\begin{center}
+  \B{Q-learning}\\
+  \begin{tabular}{r|cccc}
+    \diagbox{S}{A} & 0 & 1 & 2 & 3\\\hline
+    A & 2 & 1.5 & --- & ---\\
+    B & 1 & 1 & 2 & 0 \\
+  \end{tabular}
+\end{center}
+
+\begin{center}
+  \B{SARSA}\\
+  \begin{tabular}{r|cccc}
+    \diagbox{S}{A} & 0 & 1 & 2 & 3\\\hline
+    A & 2 & 1.5 & --- & ---\\
+    B & 1 & 1 & 2 & 0 \\
+  \end{tabular}
+\end{center}
+
 \subsubsection{}
+Both Q-learning and SARSA suffer from Maximization Bias.
+This bias happens as both learning methods use both a maximum function inside their  Q update.
+For SARSA this comes from the policy (e.g. \(\ε\)-greedy) and in Q-learning the maximum is directly used.
+The effect is visible when rewards associated with a state have a outlier maximum, then the Q estimation will focus mainly on this maximum.
+In our case we see the effects of this on the left action (0) of state A.
+As the maximum of rewards after B is 2 in our observed data we will see this action being biased towards 2 in the beginning of training.
+
 \subsubsection{}
+The problem with our argmax methods is that we are using the maximum of our estimates to choose the maximizing action.
+As we are updating the Q values while using them to find the maximum Q value we introduce the bias that focusses on the maximum.
+The idea of Double Q-learning now is to have to set of Q values, one to to choose the maximizing action and one to actually determine the value of the maximum.
+So we have two set of Q values. When we update a value of one of them we use the argmax on those Q values but then retrieve the actual Q value from the second set of Q values.
+
+(Somehow this reminds me of how a Vickroy auction works)
+
+
 \subsubsection{}
+\begin{center}
+  \begin{tabular}{r|cccc}
+    \diagbox{S}{A} & 0 & 1 & 2 & 3\\\hline
+    A & 1 & 1.5 & --- & ---\\
+    B & 1 & 1 & 1 & 1 \\
+  \end{tabular}
+\end{center}
 
 \end{document}
