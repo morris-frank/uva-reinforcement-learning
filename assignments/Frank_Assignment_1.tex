@@ -112,11 +112,16 @@ We have a linear model \(f_{\B{\β}}(\B{X}) = \B{X}\·\B{\β}\).
   \B{\ε}_{\B{\β}}
   &= \B{y} - \B{X}\hat{\B{\β}}
 \end{align*}
+\B{SKIPPED}
 
 \subsubsection{}
+\B{SKIPPED}
 \subsubsection{}
+\B{SKIPPED}
 \subsubsection{}
+\B{SKIPPED}
 \subsubsection{}
+\B{SKIPPED}
 
 \section{Introduction}
 \subsection{Introduction}
@@ -360,15 +365,15 @@ and the deterministic policy:
   \item With first-visit MC:
   \begin{align*}
     v(s_0)
-    &= \÷{1}{3} [\γ^2\·5 + \γ^4\·5 + \γ^3\·5]\\
+    &= 5\·\÷{1}{3} [\γ^2 + \γ^4 + \γ^3]\\
     &= 3.6585
   \end{align*}
 
   \item With every-visit MC:
   \begin{align*}
     v(s_0)
-    &= \÷{1}{3} [3\·5\·(1 + \γ + \γ^2) + 2\·5\·\γ^3 + \γ^4\·5]\\
-    &= 99.873
+    &= 5\·\÷{1}{3} [\÷{\γ^2 + \γ + 1}{3} + \÷{\γ^4 + \γ^3 + \γ^2 + \γ + 1}{5} + \÷{\γ^3 + \γ^2 + \γ + 1}{4}]\\
+    &= 4.304
   \end{align*}
 \end{enumerate}
 
@@ -379,7 +384,10 @@ This can considerably slow down convergence of the value estimation.
 
 \subsubsection{}
 The problem with \I{weighted importance sampling} is that its value estimation is biased.
-\B{HEEEELLLP????}
+The expectation of the biased with having \(v_b(s)\) instead of the wanted \(v_\π(s)\).
+Because of this the trajectory will be of the behavior policy not the target policy.
+The bias does go asymptotically to zero though with longer trajectories.
+Thus it is only a problem with little number of trajectories.
 
 \section{Temporal difference methods}
 \subsection{Temporal difference learning (Application)}
@@ -402,12 +410,12 @@ The problem with \I{weighted importance sampling} is that its value estimation i
   \end{center}
 
   \item 3-step TD
-  \B{TODO}
   \begin{center}
     \begin{tabular}{ccc}
       t & A & B\\\toprule
     \end{tabular}
   \end{center}
+  \B{SKIPPED}
 
   \item SARSA
   \begin{align*}
@@ -479,13 +487,40 @@ This is just using the max Q values from the Q-learning estimation.
   \begin{align*}
     (Tf)(s) &:= \÷{-1}{2}f(s) + g(s)\\
   \end{align*}
+  \B{SKIPPED}
 \end{enumerate}
 
 \subsubsection{}
+\B{SKIPPED}
 
 \subsection{Temporal difference learning (theory)}
 \subsubsection{}
+\begin{align*}
+  \÷{1}{M}\Σ_{n=1}^M G_n(s) &= V_{M-1}(S) + \α_M[G_M(s) - V_{M-1}(S)]\\
+  \÷{1}{M}G_M(S) + \÷{M-1}{M}V_{M-1}(S) &=  V_{M-1}(S) + \α_M[G_M(s) - V_{M-1}(S)]\\
+  \÷{1}{M}G_M(S) - \÷{1}{M}V_{M-1}(S) &= \α_M[G_M(s) - V_{M-1}(S)]\\
+  \÷{\÷{1}{M}(G_M(S) - V_{M-1}(S))}{G_M(s) - V_{M-1}(S)} &= \α_M\\
+  \÷{1}{M} &= \α_M
+\end{align*}
+
 \subsubsection{}
+\begin{align*}
+  \δ_t &= R_{t+1} + \γ V(S_{t+1}) - V(S_t)\\
+\end{align*}
+\begin{enumerate}[(a)]
+  \item
+  \begin{align*}
+    \E[\δ_t|S_t =s]
+  \end{align*}
+  \B{SKIPPED}
+
+  \item
+  \begin{align*}
+    \E[\δ_t|S_t =s,A_t = a]
+  \end{align*}
+  \B{SKIPPED}
+\end{enumerate}
+
 \subsubsection{}
 
 \subsection{Homework: Maximization bias}
@@ -503,10 +538,12 @@ This is just using the max Q values from the Q-learning estimation.
   \B{SARSA}\\
   \begin{tabular}{r|cccc}
     \diagbox{S}{A} & 0 & 1 & 2 & 3\\\hline
-    A & 2 & 1.5 & --- & ---\\
+    A & 2/1 & 1.5 & --- & ---\\
     B & 1 & 1 & 2 & 0 \\
   \end{tabular}
 \end{center}
+
+SARSA has 2 or 1 in A,0 depending on the Policy used. For a random policy it would have 1 but with a greedy 2. (With \(\ε\)-greedy around 2).
 
 \subsubsection{}
 Both Q-learning and SARSA suffer from Maximization Bias.
