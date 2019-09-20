@@ -316,13 +316,15 @@ First the  stochastic case:
 and the deterministic policy:
 \begin{align*}
   v^{\π}(s)
-  &= \argmax_a \π(a|s) \Σ_{s',r} p(s',r|s,a)\left[r+ \γ\·v_{\π}(s')\right]\\
-  &= \argmax_a \π(a|s) \· q^\π(s,a)
+  &= \Σ_{s',r} p(s',r|s,\π(s))\left[r+ \γ\·v_{\π}(s')\right]\\
+  &= q^\π(s,\π(s))
 \end{align*}
 
 \subsubsection{}
+See Algorithm~\ref{alg:policy_evaluation}.
 \begin{algorithm}
-  \caption{Policy Evaluation}
+  \caption{Policy Evaluation}%
+  \label{alg:policy_evaluation}
   \begin{algorithmic}
     \Repeat
       \State \(\Δ \gets 0\)
@@ -338,8 +340,10 @@ and the deterministic policy:
 \end{algorithm}
 
 \subsubsection{}
-\begin{algorithm}
-  \caption{Policy Improvement}
+See Algorithm~\ref{alg:policy_improvement}.
+\begin{algorithm}[!h]
+  \caption{Policy Improvement}%
+  \label{alg:policy_improvement}
   \begin{algorithmic}
     \State \(\text{policy-stable} \gets true\)
     \ForAll{\(s \∈ S\)}
@@ -372,8 +376,8 @@ and the deterministic policy:
   \item With every-visit MC:
   \begin{align*}
     v(s_0)
-    &= 5\·\÷{1}{3} [\÷{\γ^2 + \γ + 1}{3} + \÷{\γ^4 + \γ^3 + \γ^2 + \γ + 1}{5} + \÷{\γ^3 + \γ^2 + \γ + 1}{4}]\\
-    &= 4.304
+    &= 5\·\÷{1}{12} [\γ^2 + \γ + 1 + \γ^4 + \γ^3 + \γ^2 + \γ + 1 + \γ^3 + \γ^2 + \γ + 1]\\
+    &= 4.268
   \end{align*}
 \end{enumerate}
 
